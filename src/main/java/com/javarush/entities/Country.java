@@ -1,13 +1,25 @@
 package com.javarush.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.FetchType;
+
 
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(schema = "world",name = "country")
 public class Country {
+
     @Id
     @Column(name="id")
     private Integer id;
@@ -18,11 +30,13 @@ public class Country {
     private String alternativeCode;
 
     private String name;
+
     @Column(name = "continent")
     @Enumerated(EnumType.ORDINAL)
     private Continent continent;
 
     private String region;
+
     @Column(name = "surface_area")
     private BigDecimal surfaceArea;
 
@@ -30,16 +44,22 @@ public class Country {
     private Short independenceYear;
 
     private Integer population;
+
 @Column(name = "life_expectancy")
     private BigDecimal lifeExpectancy;
+
     @Column(name = "gnp")
     private BigDecimal GNP;
+
     @Column(name="gnpo_id")
     private BigDecimal GNPOId;
+
     @Column(name = "local_name")
     private String localName;
+
     @Column(name = "government_form")
     private String governmentForm;
+
     @Column(name="head_of_state")
     private String headOfState;
 
@@ -50,6 +70,7 @@ public class Country {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name="country_id")
     private Set<CountryLanguage> languages;
+
 
     public Integer getId() {
         return id;
@@ -185,5 +206,41 @@ public class Country {
 
     public void setLanguages(Set<CountryLanguage> languages) {
         this.languages = languages;
+    }
+
+    @Override
+    public String toString() {
+        return "Country{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", alternativeCode='" + alternativeCode + '\'' +
+                ", name='" + name + '\'' +
+                ", continent=" + continent +
+                ", region='" + region + '\'' +
+                ", surfaceArea=" + surfaceArea +
+                ", independenceYear=" + independenceYear +
+                ", population=" + population +
+                ", lifeExpectancy=" + lifeExpectancy +
+                ", GNP=" + GNP +
+                ", GNPOId=" + GNPOId +
+                ", localName='" + localName + '\'' +
+                ", governmentForm='" + governmentForm + '\'' +
+                ", headOfState='" + headOfState + '\'' +
+                ", city=" + city +
+                ", languages=" + languages +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Country country = (Country) o;
+        return id.equals(country.id) && code.equals(country.code) && alternativeCode.equals(country.alternativeCode) && name.equals(country.name) && continent == country.continent && region.equals(country.region) && surfaceArea.equals(country.surfaceArea) && independenceYear.equals(country.independenceYear) && population.equals(country.population) && lifeExpectancy.equals(country.lifeExpectancy) && GNP.equals(country.GNP) && GNPOId.equals(country.GNPOId) && localName.equals(country.localName) && governmentForm.equals(country.governmentForm) && headOfState.equals(country.headOfState) && city.equals(country.city) && languages.equals(country.languages);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, code, alternativeCode, name, continent, region, surfaceArea, independenceYear, population, lifeExpectancy, GNP, GNPOId, localName, governmentForm, headOfState, city, languages);
     }
 }

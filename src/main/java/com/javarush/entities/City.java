@@ -1,6 +1,15 @@
 package com.javarush.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+
+
+import java.util.Objects;
 
 @Entity
 @Table(schema = "world", name = "city")
@@ -57,5 +66,30 @@ public class City {
 
     public void setPopulation(Integer population) {
         this.population = population;
+    }
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", country=" + country +
+                ", district='" + district + '\'' +
+                ", population=" + population +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        City city = (City) o;
+        return id.equals(city.id) && name.equals(city.name) && country.equals(city.country)
+                && district.equals(city.district) && population.equals(city.population);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, country, district, population);
     }
 }
